@@ -1,35 +1,36 @@
 <?php
 
-session_start();
-
 require __DIR__ . '/../controller/app.php';
 
 ensure_user_is_authenticated();
 
 $view_bag = [
-    'title' => 'Edit Term'
+    'title' => 'Edit Term',
 ];
 
 if (is_get()) {
-
     $id = filter_input(
         INPUT_GET,
         'key',
-        FILTER_VALIDATE_INT
+        FILTER_VALIDATE_INT,
+        [
+            'options' => [
+                'min_range' => 1,
+            ],
+        ]
     );
 
-    if (!$id) {
+    if ($id === false || $id === null) {
         redirect('index.php');
     }
 
     $term = Data::get_term((int) $id);
 
     if ($term === false) {
-
         view('notfound', [
             'view_bag' => [
-                'title' => 'Not Found'
-            ]
+                'title' => 'Not Found',
+            ],
         ]);
 
         exit;
@@ -37,78 +38,86 @@ if (is_get()) {
 
     view('admin/edit', [
         'view_bag' => $view_bag,
-        'model'    => $term
+        'model'    => $term,
     ]);
 
     exit;
 }
 
 if (is_post()) {
-
-    if (!verify_csrf_token()) {
-
-        $view_bag['error'] =
-            'Invalid request. Please try again.';
-
-        view('admin/edit', [
-            'view_bag' => $view_bag
-        ]);
-
-        exit;
-    }
-
     $original_id = filter_input(
         INPUT_POST,
         'original_id',
-        FILTER_VALIDATE_INT
+        FILTER_VALIDATE_INT,
+        [
+            'options' => [
+                'min_range' => 1,
+            ],
+        ]
     );
 
-    $term = sanitize(
-        trim($_POST['term'] ?? '')
+    $term = request_string(
+        $_POST,
+        'term'
     );
 
-    $definition = sanitize(
-        trim($_POST['definition'] ?? '')
+    $definition = request_string(
+        $_POST,
+        'definition'
     );
 
-    if (
-        !$original_id ||
-        $term === '' ||
-        $definition === ''
-    ) {
+    $model = new GlossaryTerm();
 
+    $model->id =
+        $original_id !== false &&
+        $original_id !== null
+            ? (int) $original_id
+            : 0;
+
+    $model->term = $term;
+    $model->definition = $definition;
+
+    if (!verify_csrf_token()) {
         $view_bag['error'] =
-            'Invalid submission.';
-
-        view('admin/edit', [
-            'view_bag' => $view_bag
-        ]);
-
-        exit;
-    }
-
-    if (
-        !Data::update_term(
-            (int) $original_id,
-            $term,
-            $definition
-        )
+            'Invalid request. Please try again.';
+    } elseif (
+        $original_id === false ||
+        $original_id === null
     ) {
-
         $view_bag['error'] =
-            'Unable to update the term.';
+            'Invalid term identifier.';
+    } else {
+        $validation_error =
+            validate_glossary_data(
+                $term,
+                $definition
+            );
 
-        $model = Data::get_term((int) $original_id);
-
-        if ($model !== false) {
-            view('admin/edit', [
-                'view_bag' => $view_bag,
-                'model'    => $model
-            ]);
+        if ($validation_error !== null) {
+            $view_bag['error'] =
+                $validation_error;
+        } elseif (
+            !Data::update_term(
+                (int) $original_id,
+                $term,
+                $definition
+            )
+        ) {
+            $view_bag['error'] =
+                'Unable to update the term.';
+        } else {
+            redirect('index.php');
         }
-
-        exit;
     }
 
-    redirect('index.php');
+    view('admin/edit', [
+        'view_bag' => $view_bag,
+        'model'    => $model,
+    ]);
+
+    exit;
 }
+
+http_response_code(405);
+header('Allow: GET, POST');
+exit('Method Not Allowed.');

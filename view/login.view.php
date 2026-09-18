@@ -8,7 +8,10 @@
 
         <?php if (!empty($view_bag['status'])): ?>
 
-            <div class="alert alert-danger py-2">
+            <div
+                class="alert alert-danger py-2"
+                role="alert"
+            >
                 <?= e($view_bag['status']) ?>
             </div>
 
@@ -17,7 +20,7 @@
         <form
             method="post"
             action="login.php"
-            novalidate
+            autocomplete="on"
         >
 
             <?= csrf_field() ?>
@@ -37,7 +40,9 @@
                     name="email"
                     class="form-control"
                     required
+                    maxlength="254"
                     autocomplete="username"
+                    value="<?= e($email ?? '') ?>"
                 >
 
             </div>
@@ -57,6 +62,7 @@
                     name="password"
                     class="form-control"
                     required
+                    maxlength="4096"
                     autocomplete="current-password"
                 >
 

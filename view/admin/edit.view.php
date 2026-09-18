@@ -4,13 +4,20 @@
 
 <?php if (!empty($view_bag['error'])): ?>
 
-    <div class="alert alert-danger py-2">
+    <div
+        class="alert alert-danger py-2"
+        role="alert"
+    >
         <?= e($view_bag['error']) ?>
     </div>
 
 <?php endif; ?>
 
-<form method="post" action="edit.php">
+<form
+    method="post"
+    action="edit.php"
+    autocomplete="off"
+>
 
     <?= csrf_field() ?>
 
@@ -55,6 +62,7 @@
             name="definition"
             class="form-control"
             rows="4"
+            maxlength="10000"
             required
         ><?= e($model->definition) ?></textarea>
 

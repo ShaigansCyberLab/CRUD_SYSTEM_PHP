@@ -1,21 +1,24 @@
 <?php
 
-session_start();
-
 require __DIR__ . '/controller/app.php';
 
-$search = trim($_GET['search'] ?? '');
+$search = request_string(
+    $_GET,
+    'search'
+);
+
+$search = limit_text($search, 100);
 
 $terms = $search !== ''
     ? Data::search_terms($search)
     : Data::get_terms();
 
 $view_bag = [
-    'title' => 'Glossary'
+    'title' => 'Glossary',
 ];
 
 view('index', [
     'view_bag' => $view_bag,
     'items'    => $terms,
-    'search'   => $search
+    'search'   => $search,
 ]);

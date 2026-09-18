@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
 
@@ -31,11 +32,6 @@
         <?php require $view_path; ?>
     </div>
 
-    <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpKzYt0Y3lHB60KMlW5Xh4s9bIOgUxi8T/jzmaBbWLMmfQKqoqXMVgBvSxBhIU6"
-        crossorigin="anonymous"
-    ></script>
-
 </body>
+
 </html>

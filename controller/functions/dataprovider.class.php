@@ -7,9 +7,9 @@ require_once __DIR__ . '/GlossaryTerm.class.php';
  */
 abstract class DataProvider
 {
-    public $source;
+    protected string $source;
 
-    public function __construct($source)
+    public function __construct(string $source)
     {
         $this->source = $source;
     }
@@ -32,7 +32,9 @@ abstract class DataProvider
     /**
      * @return GlossaryTerm[]
      */
-    abstract public function search_terms(string $search): array;
+    abstract public function search_terms(
+        string $search
+    ): array;
 
     abstract public function add_term(
         string $term,
@@ -45,5 +47,7 @@ abstract class DataProvider
         string $definition
     ): bool;
 
-    abstract public function delete_term(int $id): bool;
+    abstract public function delete_term(
+        int $id
+    ): bool;
 }

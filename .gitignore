@@ -1,0 +1,23 @@
+# Environment / secrets
+.env
+.env.*
+
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+
+# Local PHP server artifacts
+php_errors.log

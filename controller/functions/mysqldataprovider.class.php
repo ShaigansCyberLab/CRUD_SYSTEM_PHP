@@ -22,8 +22,20 @@ class MySqlDataProvider extends DataProvider
 
                 PDO::ATTR_EMULATE_PREPARES =>
                     false,
+
+                PDO::ATTR_STRINGIFY_FETCHES =>
+                    false,
             ]
         );
+    }
+
+    private function like_pattern(
+        string $value
+    ): string {
+        return '%' . addcslashes(
+            $value,
+            "\\%_"
+        ) . '%';
     }
 
     /**
@@ -31,7 +43,9 @@ class MySqlDataProvider extends DataProvider
      */
     public function get_terms(): array
     {
-        $stmt = $this->connect()->query(
+        $pdo = $this->connect();
+
+        $stmt = $pdo->query(
             'SELECT id, term, definition
              FROM terms
              ORDER BY term ASC'
@@ -48,7 +62,9 @@ class MySqlDataProvider extends DataProvider
      */
     public function get_term(int $id)
     {
-        $stmt = $this->connect()->prepare(
+        $pdo = $this->connect();
+
+        $stmt = $pdo->prepare(
             'SELECT id, term, definition
              FROM terms
              WHERE id = :id
@@ -56,7 +72,7 @@ class MySqlDataProvider extends DataProvider
         );
 
         $stmt->execute([
-            'id' => $id
+            'id' => $id,
         ]);
 
         $term = $stmt->fetchObject(
@@ -71,15 +87,18 @@ class MySqlDataProvider extends DataProvider
      */
     public function get_def(string $definition)
     {
-        $stmt = $this->connect()->prepare(
-            'SELECT id, term, definition
+        $pdo = $this->connect();
+
+        $stmt = $pdo->prepare(
+            "SELECT id, term, definition
              FROM terms
-             WHERE definition LIKE :definition
-             LIMIT 1'
+             WHERE definition LIKE :definition ESCAPE '\\'
+             LIMIT 1"
         );
 
         $stmt->execute([
-            'definition' => '%' . $definition . '%'
+            'definition' =>
+                $this->like_pattern($definition),
         ]);
 
         $term = $stmt->fetchObject(
@@ -92,18 +111,22 @@ class MySqlDataProvider extends DataProvider
     /**
      * @return GlossaryTerm[]
      */
-    public function search_terms(string $search): array
-    {
-        $stmt = $this->connect()->prepare(
-            'SELECT id, term, definition
+    public function search_terms(
+        string $search
+    ): array {
+        $pdo = $this->connect();
+
+        $stmt = $pdo->prepare(
+            "SELECT id, term, definition
              FROM terms
-             WHERE term LIKE :search
-                OR definition LIKE :search
-             ORDER BY term ASC'
+             WHERE term LIKE :search ESCAPE '\\'
+                OR definition LIKE :search ESCAPE '\\'
+             ORDER BY term ASC"
         );
 
         $stmt->execute([
-            'search' => '%' . $search . '%'
+            'search' =>
+                $this->like_pattern($search),
         ]);
 
         return $stmt->fetchAll(
@@ -116,7 +139,9 @@ class MySqlDataProvider extends DataProvider
         string $term,
         string $definition
     ): bool {
-        $stmt = $this->connect()->prepare(
+        $pdo = $this->connect();
+
+        $stmt = $pdo->prepare(
             'INSERT INTO terms
                 (term, definition)
              VALUES
@@ -124,7 +149,7 @@ class MySqlDataProvider extends DataProvider
         );
 
         return $stmt->execute([
-            'term'       => $term,
+            'term' => $term,
             'definition' => $definition,
         ]);
     }
@@ -134,7 +159,9 @@ class MySqlDataProvider extends DataProvider
         string $term,
         string $definition
     ): bool {
-        $stmt = $this->connect()->prepare(
+        $pdo = $this->connect();
+
+        $stmt = $pdo->prepare(
             'UPDATE terms
              SET
                 term = :term,
@@ -143,21 +170,23 @@ class MySqlDataProvider extends DataProvider
         );
 
         return $stmt->execute([
-            'id'         => $id,
-            'term'       => $term,
+            'id' => $id,
+            'term' => $term,
             'definition' => $definition,
         ]);
     }
 
     public function delete_term(int $id): bool
     {
-        $stmt = $this->connect()->prepare(
+        $pdo = $this->connect();
+
+        $stmt = $pdo->prepare(
             'DELETE FROM terms
              WHERE id = :id'
         );
 
         return $stmt->execute([
-            'id' => $id
+            'id' => $id,
         ]);
     }
 }

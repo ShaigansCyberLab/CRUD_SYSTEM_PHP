@@ -4,13 +4,20 @@
 
 <?php if (!empty($view_bag['error'])): ?>
 
-    <div class="alert alert-danger py-2">
+    <div
+        class="alert alert-danger py-2"
+        role="alert"
+    >
         <?= e($view_bag['error']) ?>
     </div>
 
 <?php endif; ?>
 
-<form method="post" action="create.php">
+<form
+    method="post"
+    action="create.php"
+    autocomplete="off"
+>
 
     <?= csrf_field() ?>
 
@@ -30,6 +37,7 @@
             class="form-control"
             required
             maxlength="255"
+            value="<?= e($term ?? '') ?>"
         >
 
     </div>
@@ -48,8 +56,9 @@
             name="definition"
             class="form-control"
             rows="4"
+            maxlength="10000"
             required
-        ></textarea>
+        ><?= e($definition ?? '') ?></textarea>
 
     </div>
 
