@@ -1,0 +1,1022 @@
+/* Glossary Terminal - Cyber Theme */
+
+:root {
+    --bg-color: #0d0f14;
+    --card-bg: #1a1e26;
+    --border: #2a2f3d;
+    --text: #d1d9e6;
+    --muted: #6c7a96;
+    --accent: #00f2ff;
+    --accent-dim: #007a85;
+    --danger: #ff4d6d;
+    --success: #00e87a;
+    --warning: #ffc847;
+
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --space: 8px;
+}
+
+/* Reset & Base */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: var(--bg-color);
+    color: var(--text);
+    line-height: 1.65;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Scanline Overlay */
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 242, 255, 0.015) 2px,
+        rgba(0, 242, 255, 0.015) 4px
+    );
+
+    pointer-events: none;
+    z-index: 9999;
+
+    animation: scanline 8s linear infinite;
+}
+
+@keyframes scanline {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 0 100vh;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body::before {
+        animation: none;
+    }
+}
+
+/* Typography */
+
+h1,
+h2,
+h3,
+h4 {
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: calc(var(--space) * 2);
+    text-shadow: 0 0 8px var(--accent-dim);
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+    transition:
+        color 150ms ease,
+        text-shadow 150ms ease;
+}
+
+a:hover {
+    color: #fff;
+    text-shadow: 0 0 6px var(--accent);
+}
+
+/* Cards */
+
+.card-term {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: calc(var(--space) * 3);
+    margin-bottom: calc(var(--space) * 2);
+}
+
+/* Tables */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card-bg);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+th {
+    background: #0a1520;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.8rem;
+    border: 1px solid var(--border);
+    padding:
+        calc(var(--space) * 1.5)
+        calc(var(--space) * 2);
+}
+
+td {
+    border: 1px solid var(--border);
+    padding:
+        calc(var(--space) * 1.5)
+        calc(var(--space) * 2);
+    vertical-align: top;
+}
+
+tr:hover td {
+    background: rgba(0, 242, 255, 0.04);
+}
+
+/* Forms */
+
+.form-control,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+textarea {
+    background: #0d1520;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius-sm);
+    padding:
+        calc(var(--space) * 1.25)
+        calc(var(--space) * 1.5);
+    width: 100%;
+    font-family: inherit;
+    font-size: inherit;
+
+    transition:
+        border-color 150ms ease,
+        box-shadow 150ms ease;
+}
+
+.form-control:focus,
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0, 242, 255, 0.18);
+    color: #fff;
+}
+
+label,
+.form-label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: calc(var(--space) * 0.5);
+}
+
+/* Buttons */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: calc(var(--space) * 0.5);
+
+    padding:
+        calc(var(--space) * 0.875)
+        calc(var(--space) * 2);
+
+    border-radius: var(--radius-sm);
+
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+
+    cursor: pointer;
+    border: 1px solid transparent;
+
+    transition:
+        background 150ms ease,
+        color 150ms ease,
+        box-shadow 150ms ease;
+
+    text-decoration: none;
+}
+
+.btn-info,
+.btn-outline-info {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: transparent;
+}
+
+.btn-info:hover,
+.btn-outline-info:hover {
+    background: var(--accent);
+    color: #000;
+    box-shadow: 0 0 12px var(--accent-dim);
+}
+
+.btn-success,
+.btn-outline-success {
+    color: var(--success);
+    border-color: var(--success);
+    background: transparent;
+}
+
+.btn-success:hover,
+.btn-outline-success:hover {
+    background: var(--success);
+    color: #000;
+}
+
+.btn-warning,
+.btn-outline-warning {
+    color: var(--warning);
+    border-color: var(--warning);
+    background: transparent;
+}
+
+.btn-warning:hover,
+.btn-outline-warning:hover {
+    background: var(--warning);
+    color: #000;
+}
+
+.btn-danger,
+.btn-outline-danger {
+    color: var(--danger);
+    border-color: var(--danger);
+    background: transparent;
+}
+
+.btn-danger:hover,
+.btn-outline-danger:hover {
+    background: var(--danger);
+    color: #fff;
+}
+
+.btn-outline-light {
+    color: var(--text);
+    border-color: var(--border);
+    background: transparent;
+}
+
+.btn-outline-light:hover {
+    background: var(--border);
+    color: #fff;
+}
+
+/* Alerts */
+
+.alert {
+    padding:
+        calc(var(--space) * 1.5)
+        calc(var(--space) * 2);
+
+    border-radius: var(--radius-sm);
+    border: 1px solid;
+    margin-bottom: calc(var(--space) * 2);
+    font-size: 0.9rem;
+}
+
+.alert-danger {
+    border-color: var(--danger);
+    color: var(--danger);
+    background: rgba(255, 77, 109, 0.08);
+}
+
+.alert-success {
+    border-color: var(--success);
+    color: var(--success);
+    background: rgba(0, 232, 122, 0.08);
+}
+
+/* Utilities */
+
+.text-muted {
+    color: var(--muted) !important;
+}
+
+.me-2 {
+    margin-right: calc(var(--space) * 2);
+}
+
+.ms-2 {
+    margin-left: calc(var(--space) * 2);
+}
+
+.mb-3 {
+    margin-bottom: calc(var(--space) * 3);
+}
+
+.mb-4 {
+    margin-bottom: calc(var(--space) * 4);
+}
+
+.py-4 {
+    padding-top: calc(var(--space) * 4);
+    padding-bottom: calc(var(--space) * 4);
+}
+
+.py-5 {
+    padding-top: calc(var(--space) * 5);
+    padding-bottom: calc(var(--space) * 5);
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+/* =========================================================
+   RESPONSIVE DESIGN
+   ========================================================= */
+
+/* ---------- Global responsive safety ---------- */
+
+html {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
+}
+
+img,
+svg,
+video {
+    max-width: 100%;
+    height: auto;
+}
+
+pre,
+code {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+a,
+button,
+input,
+textarea,
+select {
+    max-width: 100%;
+}
+
+
+/* ---------- Tables ---------- */
+
+/*
+ * Allow wide tables to scroll horizontally instead of
+ * breaking the entire page on phones.
+ */
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+table {
+    width: 100%;
+    max-width: 100%;
+}
+
+th,
+td {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+
+/* ---------- Forms ---------- */
+
+input,
+textarea,
+select {
+    width: 100%;
+    max-width: 100%;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.input-group {
+    width: 100%;
+}
+
+
+/* ---------- Buttons ---------- */
+
+button,
+.btn {
+    min-height: 38px;
+}
+
+@media (max-width: 575.98px) {
+
+    /*
+     * Give buttons comfortable touch targets on phones.
+     */
+
+    .btn {
+        min-height: 42px;
+        padding: 0.55rem 0.8rem;
+    }
+
+    /*
+     * Allow button groups to wrap instead of overflowing.
+     */
+
+    .d-flex {
+        flex-wrap: wrap;
+    }
+
+    /*
+     * Keep action buttons usable when several appear together.
+     */
+
+    .btn + .btn {
+        margin-left: 0.25rem;
+    }
+}
+
+
+/* =========================================================
+   SMALL PHONES
+   320px - 479px
+   ========================================================= */
+
+@media (max-width: 479.98px) {
+
+    body {
+        font-size: 14px;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    h1,
+    .h1 {
+        font-size: 1.5rem;
+    }
+
+    h2,
+    .h2 {
+        font-size: 1.3rem;
+    }
+
+    h3,
+    .h3 {
+        font-size: 1.15rem;
+    }
+
+    h4,
+    .h4 {
+        font-size: 1.05rem;
+    }
+
+    /*
+     * Header/action areas stack vertically.
+     */
+
+    .d-flex.justify-content-between {
+        align-items: flex-start !important;
+        gap: 12px;
+    }
+
+    .d-flex.justify-content-between > * {
+        max-width: 100%;
+    }
+
+    /*
+     * Search controls stack cleanly.
+     */
+
+    .input-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .input-group > .form-control,
+    .input-group > .btn {
+        width: 100%;
+        border-radius: var(--radius-sm, 4px) !important;
+    }
+
+    .input-group > .btn {
+        margin-top: 8px;
+    }
+
+    /*
+     * Definition/detail pages.
+     */
+
+    dl.row {
+        display: block;
+    }
+
+    dl.row dt,
+    dl.row dd {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    dl.row dt {
+        margin-top: 12px;
+    }
+
+    /*
+     * Tables remain readable.
+     */
+
+    .table {
+        font-size: 13px;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.5rem 0.4rem;
+    }
+
+    /*
+     * Admin action buttons.
+     */
+
+    td .btn {
+        display: block;
+        width: 100%;
+        margin: 3px 0;
+    }
+
+    /*
+     * Forms.
+     */
+
+    form .btn {
+        width: 100%;
+        margin-left: 0 !important;
+        margin-top: 8px;
+    }
+}
+
+
+/* =========================================================
+   PHONES
+   480px - 575px
+   ========================================================= */
+
+@media (min-width: 480px) and (max-width: 575.98px) {
+
+    .container {
+        width: 100%;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .input-group {
+        flex-wrap: nowrap;
+    }
+
+    .input-group .form-control {
+        min-width: 0;
+    }
+
+    .table {
+        font-size: 14px;
+    }
+}
+
+
+/* =========================================================
+   TABLETS
+   576px - 991px
+   ========================================================= */
+
+@media (min-width: 576px) and (max-width: 991.98px) {
+
+    .container {
+        max-width: 94%;
+    }
+
+    .table {
+        font-size: 14px;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.6rem;
+    }
+
+    /*
+     * Prevent long definitions from forcing the page wider.
+     */
+
+    .table td {
+        overflow-wrap: anywhere;
+    }
+
+    /*
+     * Keep forms comfortable on tablets.
+     */
+
+    form {
+        max-width: 100%;
+    }
+}
+
+
+/* =========================================================
+   LAPTOPS / DESKTOPS
+   992px+
+   ========================================================= */
+
+@media (min-width: 992px) {
+
+    .container {
+        width: 100%;
+    }
+
+    /*
+     * Keep extremely wide screens from stretching the
+     * application too far.
+     */
+
+    .container {
+        max-width: 1100px;
+    }
+}
+
+
+/* =========================================================
+   LARGE DESKTOPS
+   1400px+
+   ========================================================= */
+
+@media (min-width: 1400px) {
+
+    .container {
+        max-width: 1200px;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL DEVICES
+   ========================================================= */
+
+@media (max-width: 359.98px) {
+
+    .container {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    body {
+        font-size: 13px;
+    }
+
+    .table {
+        font-size: 12px;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.35rem 0.3rem;
+    }
+
+    .btn {
+        font-size: 13px;
+    }
+}
+
+
+/* =========================================================
+   LANDSCAPE PHONES
+   ========================================================= */
+
+@media (max-height: 500px) and (orientation: landscape) {
+
+    .container {
+        padding-top: 12px !important;
+        padding-bottom: 12px !important;
+    }
+
+    h1,
+    .h1,
+    h2,
+    .h2,
+    h3,
+    .h3 {
+        margin-bottom: 0.75rem;
+    }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY / REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+
+/* =========================================================
+   BOOTSTRAP OVERRIDES
+   ========================================================= */
+
+/*
+ * Bootstrap 5.3 uses CSS variables for table colors.
+ * Override those variables so Bootstrap tables use the
+ * Glossary Terminal theme instead of Bootstrap's colors.
+ */
+
+.table {
+    --bs-table-bg: var(--card-bg);
+    --bs-table-color: var(--text);
+    --bs-table-border-color: var(--border);
+
+    --bs-table-striped-bg: #151a22;
+    --bs-table-striped-color: var(--text);
+
+    --bs-table-hover-bg: rgba(0, 242, 255, 0.04);
+    --bs-table-hover-color: var(--text);
+
+    background-color: var(--card-bg);
+    color: var(--text);
+}
+
+.table > :not(caption) > * > * {
+    background-color: var(--card-bg);
+    color: var(--text);
+    border-color: var(--border);
+}
+
+.table-dark {
+    --bs-table-bg: var(--card-bg);
+    --bs-table-color: var(--text);
+    --bs-table-border-color: var(--border);
+
+    --bs-table-striped-bg: #151a22;
+    --bs-table-striped-color: var(--text);
+
+    --bs-table-hover-bg: rgba(0, 242, 255, 0.04);
+    --bs-table-hover-color: var(--text);
+
+    background-color: var(--card-bg);
+    color: var(--text);
+}
+
+.table-dark > :not(caption) > * > * {
+    background-color: var(--card-bg);
+    color: var(--text);
+    border-color: var(--border);
+}
+
+.table-hover > tbody > tr:hover > * {
+    background-color: rgba(0, 242, 255, 0.04);
+    color: var(--text);
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+    background-color: #151a22;
+    color: var(--text);
+}
+
+
+/* ---------- Bootstrap Forms ---------- */
+
+/*
+ * Bootstrap's .form-control normally gets its background
+ * and text colors from Bootstrap CSS variables.
+ *
+ * Force the terminal theme here.
+ */
+
+.form-control,
+.form-control:focus,
+.form-select,
+.form-select:focus,
+textarea.form-control {
+    background-color: #0d1520;
+    color: var(--text);
+    border-color: var(--border);
+}
+
+/*
+ * Preserve the cyan terminal-style left border.
+ */
+
+.form-control,
+.form-select,
+textarea.form-control {
+    border-left: 3px solid var(--accent);
+}
+
+/*
+ * Bootstrap can apply a different background while focused.
+ */
+
+.form-control:focus,
+.form-select:focus,
+textarea.form-control:focus {
+    background-color: #0d1520;
+    color: #fff;
+    border-color: var(--accent);
+    border-left-color: var(--accent);
+
+    box-shadow:
+        0 0 0 3px rgba(0, 242, 255, 0.18);
+}
+
+/*
+ * Placeholder text.
+ */
+
+.form-control::placeholder,
+.form-select::placeholder,
+textarea.form-control::placeholder {
+    color: var(--muted);
+    opacity: 1;
+}
+
+/*
+ * Search inputs and other text inputs.
+ */
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="number"],
+input[type="url"],
+input[type="tel"],
+input[type="date"],
+input[type="time"] {
+    background-color: #0d1520;
+    color: var(--text);
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+input[type="number"]:focus,
+input[type="url"]:focus,
+input[type="tel"]:focus,
+input[type="date"]:focus,
+input[type="time"]:focus {
+    background-color: #0d1520;
+    color: #fff;
+}
+
+
+/* ---------- Bootstrap Input Groups ---------- */
+
+.input-group .form-control {
+    background-color: #0d1520;
+    color: var(--text);
+}
+
+.input-group .form-control:focus {
+    background-color: #0d1520;
+    color: #fff;
+    z-index: 3;
+}
+
+
+/* ---------- Bootstrap Select ---------- */
+
+.form-select {
+    background-color: #0d1520;
+    color: var(--text);
+}
+
+.form-select:focus {
+    background-color: #0d1520;
+    color: #fff;
+}
+
+
+/* ---------- Bootstrap Labels ---------- */
+
+.form-label {
+    color: var(--muted);
+}
+
+
+/* ---------- Bootstrap Text Colors ---------- */
+
+.text-secondary {
+    color: var(--muted) !important;
+}
+
+.text-body {
+    color: var(--text) !important;
+}
+
+
+/* ---------- Bootstrap Card Compatibility ---------- */
+
+.card {
+    background-color: var(--card-bg);
+    color: var(--text);
+    border-color: var(--border);
+}
+
+.card-header,
+.card-footer {
+    background-color: #0a1520;
+    color: var(--text);
+    border-color: var(--border);
+}
+
+
+/* ---------- Bootstrap Close Button ---------- */
+
+.btn-close {
+    filter: invert(1);
+}
+
+
+/* ---------- Bootstrap Disabled Inputs ---------- */
+
+.form-control:disabled,
+.form-control[readonly],
+.form-select:disabled {
+    background-color: #111722;
+    color: var(--muted);
+    border-color: var(--border);
+}
+
+
+/* ---------- Bootstrap Validation States ---------- */
+
+.form-control.is-invalid,
+.form-control.is-valid {
+    background-color: #0d1520;
+}
+
+.form-control.is-invalid {
+    color: var(--text);
+    border-color: var(--danger);
+}
+
+.form-control.is-valid {
+    color: var(--text);
+    border-color: var(--success);
+}

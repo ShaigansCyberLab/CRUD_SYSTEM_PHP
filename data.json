@@ -1,0 +1,37 @@
+[
+    {
+        "id": 1,
+        "term": "PHP",
+        "definition": "Hypertext Preprocessor"
+    },
+    {
+        "id": 2,
+        "term": "CSS",
+        "definition": "Cascading Style Sheet"
+    },
+    {
+        "id": 3,
+        "term": "XML",
+        "definition": "Extensible Markup Language"
+    },
+    {
+        "id": 4,
+        "term": ".NET",
+        "definition": "Framework for languages like C# and VB.NET"
+    },
+    {
+        "id": 5,
+        "term": "CS",
+        "definition": "Computer Science"
+    },
+    {
+        "id": 6,
+        "term": "JS",
+        "definition": "JavaScript"
+    },
+    {
+        "id": 7,
+        "term": "پانکراتین pancratin",
+        "definition": "something"
+    }
+]
