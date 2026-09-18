@@ -2,7 +2,7 @@
 
 function required_env(string $name): string
 {
-    $value = getenv($name);
+    $value = $_ENV[$name] ?? false;
 
     if ($value === false || trim($value) === '') {
         throw new RuntimeException(
@@ -12,7 +12,6 @@ function required_env(string $name): string
 
     return trim($value);
 }
-
 $db_user = required_env('DB_USER');
 $db_password = required_env('DB_PASS');
 $admin_password_hash = required_env('ADMIN_PASSWORD_HASH');

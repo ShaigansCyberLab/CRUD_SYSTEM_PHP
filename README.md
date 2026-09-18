@@ -1,58 +1,80 @@
 # CRUD System PHP
 
-A secure PHP CRUD application built with PHP, PDO, and MariaDB.
+A secure PHP CRUD application built with PHP 8+, MariaDB/MySQL, PDO, Composer, and environment-based configuration.
 
-This project demonstrates secure database interaction, environment-based configuration, password hashing, and basic CRUD operations.
+The project started as a simple CRUD application and was improved with security-focused practices:
 
-The goal of this project is to practice real-world PHP development patterns and security fundamentals.
+- Environment variable configuration
+- Dedicated database application user
+- Password hashing with bcrypt
+- PDO prepared statements
+- Session hardening
+- Security response headers
+- Login rate limiting
+- MySQL/MariaDB backend support
 
 ---
 
 # Features
 
+## Authentication
+
+- Admin login system
+- Passwords stored using bcrypt hashes
+- Session-based authentication
+- Login attempt protection
+
 ## Database
 
-- MariaDB / MySQL support
-- PDO database connection
-- UTF-8 (`utf8mb4`) support
+- MariaDB/MySQL support
+- PDO connection
 - Prepared statements
-- Protected database credentials through environment variables
-
-## CRUD Operations
-
-- Create records
-- Read records
-- Update records
-- Delete records
+- Dedicated database user
+- UTF-8 (`utf8mb4`) support
 
 ## Security
 
-Implemented security practices:
+Implemented protections:
 
-- No database passwords stored in source code
-- Environment variable based configuration
-- PDO prepared statements to prevent SQL injection
-- Password hashing using PHP `password_hash()`
-- Password verification using `password_verify()`
-- Output escaping with `htmlspecialchars()`
-- Separation between database user and application administrator
+- `HttpOnly` session cookies
+- `SameSite=Lax` cookies
+- Strict session mode
+- Content Security Policy headers
+- Clickjacking protection
+- MIME sniffing protection
+- Referrer policy
+- Login rate limiting
 
 ---
 
-# Technology Stack
+# Requirements
 
-## Backend
+- PHP 8.0+
+- MariaDB/MySQL
+- Composer
 
-- PHP 8+
+Required PHP extensions:
+
 - PDO
-- MariaDB 11+
-- MySQL-compatible database
-
-## Development Environment
-
-- Linux
-- Apache/Nginx or PHP built-in server
+- PDO MySQL
+- mbstring
+- json
 
 ---
 
-# Project Structure
+# Installation
+
+## 1. Clone the repository
+
+```bash
+git clone https://github.com/ShaigansCyberLab/CRUD_SYSTEM_PHP.git
+
+cd CRUD_SYSTEM_PHP
+
+---
+
+# License
+
+This project is licensed under the MIT License.
+
+See the [LICENSE](LICENSE) file for details.
